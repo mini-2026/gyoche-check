@@ -1,0 +1,17 @@
+{
+ "name": "챙김이",
+ "apk": "gyoche-check.apk",
+ "tag": "code",
+ "web": true,
+ "webroot": "assets",
+ "intro": [
+  "음식 유통기한과 옷·생필품·자동차 부품 교체 시기를 챙겨 줘요.",
+  "바코드나 영수증을 찍으면 쉽게 등록돼요.",
+  "교체할 때가 되면 알림으로 알려 드려요.",
+  "월간 통계로 버린 금액, 쓴 돈을 한눈에 봐요."
+ ],
+ "redirects": [
+  "guide.html",
+  "app.html"
+ ]
+}

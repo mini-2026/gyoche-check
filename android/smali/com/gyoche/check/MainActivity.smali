@@ -15,7 +15,7 @@
 # static fields
 .field private static final FORMATS:[I
 
-.field private static final RELEASE_API:Ljava/lang/String; = "https://api.github.com/repos/dlsdml99-create/gyoche-check/releases/latest"
+.field private static final RELEASE_API:Ljava/lang/String; = "https://api.github.com/repos/mini-2026/gyoche-check/releases/latest"
 
 .field private static final REQ_BK_OPEN:I = 0x1c86
 
@@ -1388,7 +1388,7 @@
     :try_start_0
     new-instance v1, Ljava/net/URL;
 
-    const-string v2, "https://api.github.com/repos/dlsdml99-create/gyoche-check/releases/latest"
+    const-string v2, "https://api.github.com/repos/mini-2026/gyoche-check/releases/latest"
 
     invoke-direct {v1, v2}, Ljava/net/URL;-><init>(Ljava/lang/String;)V
 
@@ -1499,7 +1499,7 @@
 
     if-eqz v4, :cond_2
 
-    const-string v4, "https://github.com/dlsdml99-create/gyoche-check/releases/download/"
+    const-string v4, "https://github.com/mini-2026/gyoche-check/releases/download/"
 
     invoke-virtual {v5, v4}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
 
@@ -3567,7 +3567,7 @@
 
     if-eqz v2, :cond_1
 
-    const-string v0, "/dlsdml99-create/gyoche-check/"
+    const-string v0, "/mini-2026/gyoche-check/"
 
     :goto_0
     invoke-virtual {p0, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
@@ -3577,7 +3577,7 @@
     return p0
 
     :cond_1
-    const-string v2, "dlsdml99-create.github.io"
+    const-string v2, "mini-2026.github.io"
 
     invoke-virtual {v2, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
