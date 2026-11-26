@@ -1739,6 +1739,8 @@
     invoke-direct {p0, p1}, Lcom/gyoche/check/MainActivity;->onCode(Ljava/lang/String;)V
 
     :goto_1
+    invoke-direct {p0}, Lcom/gyoche/check/MainActivity;->clearShot()V
+
     return-void
 .end method
 
@@ -1766,6 +1768,8 @@
     move-result-object p1
 
     invoke-direct {p0, p1}, Lcom/gyoche/check/MainActivity;->result(Lorg/json/JSONObject;)V
+
+    invoke-direct {p0}, Lcom/gyoche/check/MainActivity;->clearShot()V
 
     return-void
 .end method
@@ -1862,6 +1866,8 @@
     invoke-direct {p0, p1}, Lcom/gyoche/check/MainActivity;->result(Lorg/json/JSONObject;)V
 
     :goto_0
+    invoke-direct {p0}, Lcom/gyoche/check/MainActivity;->clearShot()V
+
     return-void
 .end method
 
@@ -2189,6 +2195,8 @@
     invoke-direct {p0, p1}, Lcom/gyoche/check/MainActivity;->result(Lorg/json/JSONObject;)V
 
     :goto_1
+    invoke-direct {p0}, Lcom/gyoche/check/MainActivity;->clearShot()V
+
     return-void
 .end method
 
@@ -2214,6 +2222,8 @@
     move-result-object p1
 
     invoke-direct {p0, p1}, Lcom/gyoche/check/MainActivity;->result(Lorg/json/JSONObject;)V
+
+    invoke-direct {p0}, Lcom/gyoche/check/MainActivity;->clearShot()V
 
     return-void
 .end method
@@ -4840,5 +4850,28 @@
 
     invoke-virtual {p1, v0, v1}, Landroid/os/BaseBundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
+    return-void
+.end method
+
+# 찍은 사진(cache/shots/shot.jpg)은 인식이 끝나면 지워요 (영수증 등 개인 사진이 캐시에 남지 않게)
+.method private clearShot()V
+    .locals 3
+
+    :try_start_0
+    new-instance v0, Ljava/io/File;
+
+    invoke-virtual {p0}, Landroid/content/Context;->getCacheDir()Ljava/io/File;
+
+    move-result-object v1
+
+    const-string v2, "shots/shot.jpg"
+
+    invoke-direct {v0, v1, v2}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    invoke-virtual {v0}, Ljava/io/File;->delete()Z
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    :catch_0
     return-void
 .end method
