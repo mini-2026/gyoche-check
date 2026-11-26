@@ -57,7 +57,26 @@ def literal(s, i):
     except Exception:
         return None
 
+def app_privacy():
+    """앱 안 정보 창의 개인정보 문구(APP_INFO "privacy")를 그대로 가져와요."""
+    pat = re.compile(r'"privacy"\s*:\s*(?=")')
+    for root, _, files in os.walk(src):
+        for f in files:
+            if f.endswith(('.html', '.js')):
+                s = open(os.path.join(root, f), encoding='utf-8', errors='ignore').read()
+                m = pat.search(s)
+                if m:
+                    try:
+                        v = json.JSONDecoder().raw_decode(s[m.end():])[0]
+                        if isinstance(v, str) and v.strip():
+                            return v
+                    except Exception:
+                        pass
+    return None
+
 notes = find_notes()[:8]
+# 개인정보: 앱 안 정보 창과 같은 문구. 없으면 about.json의 privacy, 그것도 없으면 기본 문구
+privacy = app_privacy() or about.get('privacy') or '입력한 내용은 내 휴대폰에만 저장돼요. 따로 모으거나 보내지 않아요.'
 e = html.escape
 apk = f'https://github.com/{repo}/releases/latest/download/{about["apk"]}'
 intro = ''.join(f'<li>{e(x)}</li>' for x in about['intro'])
@@ -86,7 +105,7 @@ h2{{font-size:18px;margin:0 0 8px}}ul{{margin:4px 0;padding-left:20px}}.n{{borde
 <li>예전 주소에서 받은 앱이 있으면, 앱 안에서 백업을 먼저 하고 지운 뒤 설치해 주세요. 설치한 다음 백업을 불러오면 돼요.</li>
 <li>설치한 뒤에는 앱 안에서 새 버전을 알려 드려요.</li></ul></section>
 <section id="updates"><h2>업데이트 내용</h2>{upd}</section>
-<section><h2>개인정보</h2><ul><li>입력한 내용은 내 휴대폰에만 저장돼요. 따로 모으거나 보내지 않아요.</li></ul></section>
+<section><h2>개인정보</h2><ul><li>{e(privacy)}</li></ul></section>
 </main></body></html>'''
 open(os.path.join(out, 'index.html'), 'w', encoding='utf-8').write(page)
 # old in-app links (guide.html etc.) land on the download page
