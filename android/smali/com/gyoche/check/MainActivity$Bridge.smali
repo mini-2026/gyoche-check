@@ -737,3 +737,35 @@
 
     return-object v0
 .end method
+
+.method public installUpdate()V
+    .locals 3
+    .annotation runtime Landroid/webkit/JavascriptInterface;
+    .end annotation
+
+    iget-object v0, p0, Lcom/gyoche/check/MainActivity$Bridge;->this$0:Lcom/gyoche/check/MainActivity;
+
+    invoke-static {v0}, Lcom/gyoche/check/MainActivity;->G(Lcom/gyoche/check/MainActivity;)Landroid/webkit/WebView;
+
+    move-result-object v1
+
+    const-string v2, "mini-2026/gyoche-check"
+
+    invoke-static {v0, v1, v2}, Lupd/U;->start(Landroid/app/Activity;Landroid/webkit/WebView;Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method public updateInBrowser()V
+    .locals 2
+    .annotation runtime Landroid/webkit/JavascriptInterface;
+    .end annotation
+
+    iget-object v0, p0, Lcom/gyoche/check/MainActivity$Bridge;->this$0:Lcom/gyoche/check/MainActivity;
+
+    const-string v1, "mini-2026/gyoche-check"
+
+    invoke-static {v0, v1}, Lupd/U;->browser(Landroid/app/Activity;Ljava/lang/String;)V
+
+    return-void
+.end method

@@ -1236,7 +1236,17 @@
 .end method
 
 .method private synthetic lambda$backupResult$26(Landroid/net/Uri;)V
-    .locals 4
+    .locals 6
+
+    invoke-static {p0, p1}, Lupd/U;->size(Landroid/content/Context;Landroid/net/Uri;)J
+
+    move-result-wide v2
+
+    const-wide/32 v4, 0x5000000
+
+    cmp-long v4, v2, v4
+
+    if-lez v4, :big_known
 
     :try_start_0
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
@@ -1280,13 +1290,11 @@
     goto :goto_0
 
     :cond_0
-    new-instance v0, Ljava/io/IOException;
+    invoke-virtual {p1}, Ljava/io/InputStream;->close()V
 
-    const-string v1, "too big"
+    const-wide/16 v2, -0x1
 
-    invoke-direct {v0, v1}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
-
-    throw v0
+    goto :big_known
 
     :catchall_0
     move-exception v0
@@ -1336,7 +1344,32 @@
     .catch Ljava/lang/Exception; {:try_start_4 .. :try_end_4} :catch_0
 
     :catch_0
-    const/4 v1, 0x0
+    const-string p1, "window.AppInfo&&AppInfo.backupOpenFail&&AppInfo.backupOpenFail('read',0)"
+
+    invoke-direct {p0, p1}, Lcom/gyoche/check/MainActivity;->js(Ljava/lang/String;)V
+
+    return-void
+
+    :big_known
+    new-instance p1, Ljava/lang/StringBuilder;
+
+    const-string v0, "window.AppInfo&&AppInfo.backupOpenFail&&AppInfo.backupOpenFail('big',"
+
+    invoke-direct {p1, v0}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    invoke-virtual {p1, v2, v3}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    const-string v0, ")"
+
+    invoke-virtual {p1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-direct {p0, p1}, Lcom/gyoche/check/MainActivity;->js(Ljava/lang/String;)V
+
+    return-void
 
     :goto_3
     new-instance p1, Ljava/lang/StringBuilder;
@@ -2323,29 +2356,10 @@
 .method private synthetic lambda$showUpdate$24(Ljava/lang/String;Landroid/content/DialogInterface;I)V
     .locals 0
 
-    invoke-static {p1}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
+    const-string p1, "window.AppInfo&&AppInfo.updStart&&AppInfo.updStart()"
 
-    move-result-object p1
+    invoke-direct {p0, p1}, Lcom/gyoche/check/MainActivity;->js(Ljava/lang/String;)V
 
-    invoke-static {p1}, Lcom/gyoche/check/MainActivity;->safeLink(Landroid/net/Uri;)Z
-
-    move-result p2
-
-    if-eqz p2, :cond_0
-
-    :try_start_0
-    new-instance p2, Landroid/content/Intent;
-
-    const-string p3, "android.intent.action.VIEW"
-
-    invoke-direct {p2, p3, p1}, Landroid/content/Intent;-><init>(Ljava/lang/String;Landroid/net/Uri;)V
-
-    invoke-virtual {p0, p2}, Landroid/content/Context;->startActivity(Landroid/content/Intent;)V
-    :try_end_0
-    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
-
-    :catch_0
-    :cond_0
     return-void
 .end method
 
@@ -3907,7 +3921,7 @@
 
     move-result-object p1
 
-    const-string p2, "\'\uc5c5\ub370\uc774\ud2b8\'\ub97c \ub204\ub974\uba74 \ud30c\uc77c\uc744 \ub0b4\ub824\ubc1b\uc544\uc694. \ub2e4 \ubc1b\uc73c\uba74 \uc54c\ub9bc\uc5d0\uc11c \ud30c\uc77c\uc744 \ub20c\ub7ec \uc124\uce58\ud574 \uc8fc\uc138\uc694. \uc801\uc5b4 \ub454 \ub0b4\uc6a9\uc740 \uadf8\ub300\ub85c \ub0a8\uc544\uc694."
+    const-string p2, "\'\uc5c5\ub370\uc774\ud2b8\'\ub97c \ub204\ub974\uba74 \uc571 \uc548\uc5d0\uc11c \uc0c8 \ubc84\uc804\uc744 \ubc1b\uace0 \uc124\uce58 \ud654\uba74\uc744 \uc5f4\uc5b4\uc694. \uc801\uc5b4 \ub454 \ub0b4\uc6a9\uc740 \uadf8\ub300\ub85c \ub0a8\uc544\uc694."
 
     invoke-virtual {p1, p2}, Landroid/app/AlertDialog$Builder;->setMessage(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
 
@@ -4485,6 +4499,8 @@
 
     invoke-super {p0, p1, p2, p3}, Landroid/app/Activity;->onActivityResult(IILandroid/content/Intent;)V
 
+    invoke-static {p0, p1}, Lupd/U;->onResult(Landroid/app/Activity;I)V
+
     invoke-direct {p0, p1, p2, p3}, Lcom/gyoche/check/MainActivity;->backupResult(IILandroid/content/Intent;)Z
 
     move-result v0
@@ -4656,6 +4672,8 @@
     .locals 3
 
     invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V
+
+    invoke-static {p0}, Lupd/U;->clean(Landroid/content/Context;)V
 
     if-eqz p1, :cond_0
 
